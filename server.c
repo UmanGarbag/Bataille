@@ -1,76 +1,110 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 #include "server.h"
-#define PORT 4001
-#define LOCALHOST 127.0.0.1
 
-int main(){
 
-    int a = create_socket();
-    if(a != -1){
-        printf("la socket est crée");
+#define SOCKET_ERROR -1
+
+typedef struct sockaddr_in SOCKADDR_IN;
+typedef struct sockaddr SOCKADDR;
+
+
+int main(int argc, char **argv) {
+
+    
+    if(argc != 2) {
+        goto error;
     }
-    else
-        perror("socket");
 
-    return 0;
+    if(!strcmp(argv[1], "start")) {
+        return start();
+    }if(!strcmp(argv[1], "stop")) {
+        return stop();
+    }
+  /*  if(!strcmp(argv[1], "status")) {
+        return status();
+    }*/
+
+    else {
+        goto error;
+    }
+
+    return EXIT_SUCCESS;
+
+error:
+    fprintf(stderr, "%s: invalid arguments\n", argv[0]);
+    return EXIT_FAILURE;
+}
+
+int start(void){
+    printf("Server starting :\n");
+
+    // FIX ME 
+}
+
+int stop(void){
+    printf("Stopping the server\n");
+    int close_socket = close(); /*Close la socket puis quit le serv */
+}
+
+int status(void){
+    // FIX ME
 }
 
 int create_socket()
 {
-    SOCKADDR_IN sin;
-    SOCKET sock;
-    socklen_t taille = sizeof(sin);
+   SOCKADDR_IN sin; // serveur
+   SOCKADDR_IN csin; // client
 
-    SOCKADDR_IN csin;
-    SOCKET csock;
-    socklen_t crecsize = sizeof(csin);
+   int sock = 0;
+   sock = socket(AF_INET, SOCK_STREAM, 0);
+   
+   if(sock != SOCKET_ERROR)
+   {
+        printf("Socket %d, open",sock);
 
-    int sock;
-    int bind_err;
-    int ecoute;
-
-    sock = socket(AF_INET,SOCK_STREAM, 0);
-
-    if(sock != -1)
-    {
-        printf("Socket %d, maintenant ouverte",sock);
         sin.sin_addr.s_addr = htons(INADDR_ANY);
-        sin.sin_family = AF_INET;
-        sin.sin_port = htons(PORT);
-        bind_err = bind(sock, (SOCKADDR*)&sin,taille);
+        sin.sin_family = AF_INET;                 
+        sin.sin_port = htons(PORT);  
 
-        if(bind_err != -1)
+        int binded = 0;
+        binded = bind(sock,(SOCKADDR*)&sin, sizeof(sin));
+
+    if(binded != SOCKET_ERROR)
+    {
+        int listening;
+        listening = listen(sock,5);
+
+        if(listening != SOCKET_ERROR)
         {
-            ecoute = listen(sock,5);
-            printf("La socket est en ecoute sur le port %d\n",PORT);
+            printf("Waiting for a client on %d port",PORT);
+            int csock = 0;
+            csock = accept(sock, (SOCKADDR*)&csin, sizeof(csin));
 
-            if(ecoute != -1)
-            {
-                printf("En attente d'un client");
-                csock = accept(sock, (SOCKADDR*)&csin, &crecsize);
-                printf("Connection avec la socket %d de %s:%d\n",csock, inet_ntoa(csin.sin_addr), htons(csin.sin_port));
-
-            }
-            else{
-                perror("listen");
-            }
+            printf("A client is now connected on %d socket", csock);
         }
         else{
-            perror("bind");
-            printf("Ferme la socket client\n");
-            closesocket(csock);
-            closesocket(sock);
-        }
+            perror("listen");
+            }
     }
     else{
-        perror("socket");
-    }
+        perror("bind");
+        }
+  }
+   else{
+      perror("socket");
+        }
 
-    return EXIT_SUCCESS;
+    printf("Close of client socket\n");
+    closesocket(csock);
+    printf("Close of server socket\n");
+    closesocket(sock);
+    
+        
 }
