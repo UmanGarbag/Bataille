@@ -68,7 +68,7 @@ int create_socket()
    
    if(sock != SOCKET_ERROR)
    {
-        printf("Socket %d, open",sock);
+        printf("Socket %d, open\n",sock);
 
         sin.sin_addr.s_addr = htons(INADDR_ANY);
         sin.sin_family = AF_INET;                 
@@ -84,11 +84,11 @@ int create_socket()
 
         if(listening != SOCKET_ERROR)
         {
-            printf("Waiting for a client on %d port",PORT);
+            printf("Waiting for a client on %d port\n",PORT);
             int csock = 0;
             csock = accept(sock, (SOCKADDR*)&csin, &crecsize);
              
-            printf("A client is now connected on %d socket", csock);
+            printf("A client is now connected on %d socket\n", csock);
         }
         else{
             perror("listen");
