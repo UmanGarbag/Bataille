@@ -10,6 +10,7 @@
 
 
 #define SOCKET_ERROR -1
+#define PORT 4001
 
 typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
@@ -44,13 +45,13 @@ error:
 
 int start(void){
     printf("Server starting :\n");
-
+    create_socket();
     // FIX ME 
 }
 
 int stop(void){
     printf("Stopping the server\n");
-    int close_socket = close(); /*Close la socket puis quit le serv */
+     /*Close la socket puis quit le serv */
 }
 
 int status(void){
@@ -61,9 +62,9 @@ int create_socket()
 {
    SOCKADDR_IN sin; // serveur
    SOCKADDR_IN csin; // client
-
+   socklen_t crecsize = sizeof(csin);
    int sock = 0;
-   sock = socket(AF_INET, SOCK_STREAM, 0);
+   sock = socket(AF_INET, SOCK_STREAM, 0); // TCP/IP
    
    if(sock != SOCKET_ERROR)
    {
@@ -85,8 +86,8 @@ int create_socket()
         {
             printf("Waiting for a client on %d port",PORT);
             int csock = 0;
-            csock = accept(sock, (SOCKADDR*)&csin, sizeof(csin));
-
+            csock = accept(sock, (SOCKADDR*)&csin, &crecsize);
+             
             printf("A client is now connected on %d socket", csock);
         }
         else{
@@ -101,10 +102,5 @@ int create_socket()
       perror("socket");
         }
 
-    printf("Close of client socket\n");
-    closesocket(csock);
-    printf("Close of server socket\n");
-    closesocket(sock);
-    
-        
+    return EXIT_SUCCESS;    
 }
