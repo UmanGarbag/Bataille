@@ -49,7 +49,7 @@ int connection(){
        // closesocket(sock);
 
     }
-        return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 
 }
 
