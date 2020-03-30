@@ -44,9 +44,16 @@ error:
 }
 
 int start(void){
-    printf("Server starting :\n");
+
+    printf("Server starting");
+    for(int i = 0;i < 3;i++)
+        {
+        printf(".");
+        fflush(stdout);
+        sleep(1);
+        }
+    printf("\n");
     create_socket();
-    // FIX ME 
 }
 
 int stop(void){
@@ -60,6 +67,7 @@ int status(void){
 
 int create_socket()
 {
+   char buf[200];
    SOCKADDR_IN sin; // serveur
    SOCKADDR_IN csin; // client
    socklen_t crecsize = sizeof(csin);
@@ -87,9 +95,29 @@ int create_socket()
             printf("Waiting for a client on %d port\n",PORT);
             int csock = 0;
             csock = accept(sock, (SOCKADDR*)&csin, &crecsize);
-             
-            printf("A client is now connected on %d socket\n", csock);
+            if (csock == SOCKET_ERROR)
+            {
+                perror("accept");
+            }
+            else
+            {
+                printf("Le client est bien connecté\n");
+
+            }
+            
+
+            if(recv(csock,buf,sizeof(buf),0) != SOCKET_ERROR)
+           {
+               printf("Reçu: %s\n", buf);
+           }
+           else
+           {
+               printf("Rien reçu");
+           }
+           
+           
         }
+        
         else{
             perror("listen");
             }
@@ -101,6 +129,5 @@ int create_socket()
    else{
       perror("socket");
         }
-
     return EXIT_SUCCESS;    
 }
