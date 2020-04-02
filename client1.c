@@ -55,7 +55,7 @@ int connection(){
 
 int send_data(int sock){
 
-    char phrase[100] = "Bonjour";
+    char phrase[100] = "A4";
     int envoie;
 
    envoie = send(sock,phrase,sizeof(phrase),0);

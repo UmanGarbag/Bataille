@@ -6,14 +6,18 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <pthread.h>
 #include "server.h"
 
+void* Func(void* data);
 
 #define SOCKET_ERROR -1
 #define PORT 4001
 
 typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
+
+
 
 
 int main(int argc, char **argv) {
@@ -84,15 +88,19 @@ int create_socket()
 
         int binded = 0;
         binded = bind(sock,(SOCKADDR*)&sin, sizeof(sin));
-
-    if(binded != SOCKET_ERROR)
-    {
-        int listening;
-        listening = listen(sock,5);
+   
+        if(binded != SOCKET_ERROR)
+        {
+            int listening;
+            listening = listen(sock,5);
 
         if(listening != SOCKET_ERROR)
-        {
+            {
             printf("Waiting for a client on %d port\n",PORT);
+            }
+        }
+        //while (1)
+        //{
             int csock = 0;
             csock = accept(sock, (SOCKADDR*)&csin, &crecsize);
             if (csock == SOCKET_ERROR)
@@ -105,6 +113,9 @@ int create_socket()
 
             }
             
+            pthread_t thread1;
+
+            pthread_create(&thread1, NULL, Func, (void *)&csock);
 
             if(recv(csock,buf,sizeof(buf),0) != SOCKET_ERROR)
            {
@@ -115,19 +126,18 @@ int create_socket()
                printf("Rien reçu");
            }
            
-           
-        }
+        //}
+   } 
         
-        else{
-            perror("listen");
-            }
-    }
-    else{
-        perror("bind");
-        }
-  }
-   else{
-      perror("socket");
-        }
     return EXIT_SUCCESS;    
 }
+
+
+void* Func(void* data)
+{
+    char buffer[200];
+    recv((int)data,buffer,sizeof(buffer),0);
+    printf("Bienvenue client %d",data);
+
+    return 0;
+}    
