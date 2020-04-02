@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -43,29 +44,49 @@ int connection(){
         else{
             printf("Impossible de se connecter\n");
         }
-        
         send_data(sock);
         /* On ferme la socket précédemment ouverte */
        // closesocket(sock);
 
     }
+
     return EXIT_SUCCESS;
 
 }
 
 int send_data(int sock){
 
-    char phrase[100] = "A4";
+    char phrase[100];
     int envoie;
 
-   envoie = send(sock,phrase,sizeof(phrase),0);
-        
+  // envoie = send(sock,phrase,sizeof(phrase),0);
+      /*  
         if(envoie != SOCKET_ERROR){
             printf("Chaine envoyé : %s\n", phrase);
         }
         else
         {
             perror("erreur d'envoie");
-        }
+        }*/
+    char buf[20] = {0};
+   
+    do
+    {       
+        recv(sock,buf,sizeof(buf),0);
+        buf[strlen(buf)-1] = 0;
+        printf("cli reçoit = %s\n",buf);
+        if (!strcmp(buf,"STOP"))
+    {
+        printf("Je suis dans le break");
+        break;
+    }
+        memset(buf,0,sizeof(buf));
+        fgets(buf,sizeof(buf),stdin);
+        send(sock,buf,sizeof(buf),0);
+        memset(buf,0,sizeof(buf));
+
+    } while (1);
+    
     return EXIT_SUCCESS;
 }
+

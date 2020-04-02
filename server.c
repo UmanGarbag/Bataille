@@ -99,11 +99,11 @@ int create_socket()
             printf("Waiting for a client on %d port\n",PORT);
             }
         }
-        //while (1)
-        //{
-            int csock = 0;
-            csock = accept(sock, (SOCKADDR*)&csin, &crecsize);
-            if (csock == SOCKET_ERROR)
+        while (1)
+        {
+            int *csock = malloc(sizeof(int));
+            *csock = accept(sock, (SOCKADDR*)&csin, &crecsize);
+            if (*csock == SOCKET_ERROR)
             {
                 perror("accept");
             }
@@ -112,12 +112,13 @@ int create_socket()
                 printf("Le client est bien connecté\n");
 
             }
-            
+            printf("Client connecté socket n°%d\n",*csock);
             pthread_t thread1;
+            
 
-            pthread_create(&thread1, NULL, Func, (void *)&csock);
+            pthread_create(&thread1, NULL, Func, (void *)csock);
 
-            if(recv(csock,buf,sizeof(buf),0) != SOCKET_ERROR)
+          /*  if(recv(csock,buf,sizeof(buf),0) != SOCKET_ERROR)
            {
                printf("Reçu: %s\n", buf);
            }
@@ -125,8 +126,8 @@ int create_socket()
            {
                printf("Rien reçu");
            }
-           
-        //}
+           */
+        }
    } 
         
     return EXIT_SUCCESS;    
@@ -135,9 +136,34 @@ int create_socket()
 
 void* Func(void* data)
 {
+    int *sock = (int*)data;
     char buffer[200];
-    recv((int)data,buffer,sizeof(buffer),0);
-    printf("Bienvenue client %d",data);
+   // recv(*sock,buffer,sizeof(buffer),0);
+    printf("Bienvenue client %d\n",*sock);
+ //   printf("le threads finish, sock == %d\n",*sock);
+ //   printf("Le msg du client n°%d est : %s\n ",*sock,buffer);
+   char buf[20] = {0};
 
-    return 0;
-}    
+
+do{
+   
+    fgets(buf,sizeof(buf),stdin);
+    send(*sock,buf,sizeof(buf),0);
+    if (!strcmp(buf,"STOP\n"))
+    {
+        break;
+    }
+    
+
+    memset(buf,0,sizeof(buf));
+    recv(*sock,buf,sizeof(buf),0);
+    printf("serv reçoit = %s\n",buf);
+    memset(buf,0,sizeof(buf));
+    }while(1);
+ 
+    printf("Threads done : %d\n",*sock);
+    free(sock);
+    pthread_exit(NULL);
+    
+}  
+    
