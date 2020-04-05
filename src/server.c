@@ -220,10 +220,5 @@ int create_thread(int *csock){
 
 }
 
-int login(){
 
-}
 
-int create_account(){
-
-}

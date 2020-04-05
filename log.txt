@@ -10,3 +10,47 @@ Client connecté socket n°5
 05/04/2020 [18:35:57]: Waiting for a client on 4001 port
 05/04/2020 [18:35:57]: Le client est bien connecté, socket n°5
 05/04/2020 [18:35:57]: Client connecté socket n°5
+05/04/2020 [21:00:38]: Socket 3 open
+05/04/2020 [21:00:38]: Waiting for a client on 4001 port
+05/04/2020 [21:00:38]: Le client est bien connecté, socket n°5
+05/04/2020 [21:00:38]: Client connecté socket n°5
+05/04/2020 [22:43:53]: Socket 3 open
+05/04/2020 [22:43:53]: Waiting for a client on 4001 port
+05/04/2020 [22:43:53]: Le client est bien connecté, socket n°5
+05/04/2020 [22:43:53]: Client connecté socket n°5
+05/04/2020 [23:04:36]: Socket 3 open
+05/04/2020 [23:04:36]: Waiting for a client on 4001 port
+05/04/2020 [23:04:36]: Le client est bien connecté, socket n°5
+05/04/2020 [23:04:36]: Client connecté socket n°5
+05/04/2020 [23:05:39]: Socket 3 open
+05/04/2020 [23:05:39]: Waiting for a client on 4001 port
+05/04/2020 [23:05:39]: Le client est bien connecté, socket n°5
+05/04/2020 [23:05:39]: Client connecté socket n°5
+05/04/2020 [23:07:52]: Socket 3 open
+05/04/2020 [23:07:52]: Waiting for a client on 4001 port
+05/04/2020 [23:07:52]: Le client est bien connecté, socket n°5
+05/04/2020 [23:07:52]: Client connecté socket n°5
+05/04/2020 [23:08:14]: Socket 3 open
+05/04/2020 [23:08:14]: Waiting for a client on 4001 port
+05/04/2020 [23:08:14]: Le client est bien connecté, socket n°5
+05/04/2020 [23:08:14]: Client connecté socket n°5
+05/04/2020 [23:08:31]: Socket 3 open
+05/04/2020 [23:08:31]: Waiting for a client on 4001 port
+05/04/2020 [23:08:31]: Le client est bien connecté, socket n°5
+05/04/2020 [23:08:31]: Client connecté socket n°5
+05/04/2020 [23:27:07]: Socket 3 open
+05/04/2020 [23:27:07]: Waiting for a client on 4001 port
+05/04/2020 [23:27:07]: Le client est bien connecté, socket n°5
+05/04/2020 [23:27:07]: Client connecté socket n°5
+05/04/2020 [23:28:03]: Socket 3 open
+05/04/2020 [23:28:03]: Waiting for a client on 4001 port
+05/04/2020 [23:28:03]: Le client est bien connecté, socket n°5
+05/04/2020 [23:28:03]: Client connecté socket n°5
+05/04/2020 [23:33:46]: Socket 3 open
+05/04/2020 [23:33:46]: Waiting for a client on 4001 port
+05/04/2020 [23:33:46]: Le client est bien connecté, socket n°5
+05/04/2020 [23:33:46]: Client connecté socket n°5
+05/04/2020 [23:35:02]: Socket 3 open
+05/04/2020 [23:35:02]: Waiting for a client on 4001 port
+05/04/2020 [23:35:02]: Le client est bien connecté, socket n°5
+05/04/2020 [23:35:02]: Client connecté socket n°5

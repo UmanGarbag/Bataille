@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <sys/select.h>
 
+
 #include "client.h"
 #define PORT 4001
 #define closesocket(s) close(s)
@@ -48,7 +49,7 @@ int connection(){
             printf("Impossible de se connecter\n");
         }
         /*Appel de la fonction qui permet d'envoyé de la data*/
-        printf("Fonction connection :  sock == %d\n",sock);
+     //   printf("Fonction connection :  sock == %d\n",sock);
         send_data(sock);
     }
 
@@ -61,7 +62,7 @@ int send_data(int sock){
     char buffer[256];
     int envoie;
     int socket = sock;
-    printf("Fonction send_data : socket %d\n",socket);
+//  printf("Fonction send_data : socket %d\n",socket);
 
     printf("Bienvenue au jeu, Bataille Navale !!!\n");
     printf("\n");
@@ -74,6 +75,7 @@ int send_data(int sock){
     {
     case '1':
         /*FIXME : Appel de la fonction pour ce log*/
+        login(sock);
         break;
     case '2':
         /*FIXME : Appel de la fonction pour crée un compte*/
@@ -81,6 +83,7 @@ int send_data(int sock){
         break;
     case '3':
         /*FIXME : Appel de la fonction qui ferme la connection*/
+        quit();
         break;
     default:
         /*FIXME : Appel de la fonction qui envoie le msg d'erreur*/
@@ -101,12 +104,14 @@ int send_data(int sock){
 
 return EXIT_SUCCESS;
 }
+
 int create_account(int sock){
     
     char username[15];
     char password[26];
-    printf("Création de votre compte :\n");
-    printf("Quel sera votre username : ");
+    char buf[200];
+    
+    printf("Quel sera votre username ? : ");
 
     fgets(username,sizeof(username),stdin);
     printf("\n");
@@ -123,6 +128,12 @@ int create_account(int sock){
     printf("Veuillez choisir un mot de passe :");
     
     fgets(password,sizeof(password),stdin);
+
+    while(strlen(password) < 16){
+        fgets(password,sizeof(password),stdin);
+        printf("Password faible, recommencer");
+    }
+
     if(send(sock,password,sizeof(password),0) != SOCKET_ERROR)
     {
         printf("Password send\n");
@@ -132,12 +143,40 @@ int create_account(int sock){
         perror("Password don't send");
     }
     
+    printf("Compte crée ! Bienvenue %s\n",username);
 
-   /* if (strlen(password) < 16)
-    {
-        fgets(password,sizeof(password),stdin);
-    }*/
-
+    while(buf[0] != '1'){
+        printf("Taper 1 pour vous connectez ou 3 pour Exit !\n");
+        fgets(buf,sizeof(buf),stdin);
+        if(strcmp(buf,"1")){
+            login();
+        }
+        else if(strcmp(buf,"3")){
+            quit();
+        }
+    }
+    /*Appel de la fonction login, pour après la création du compte se connecters*/
+    
+    
 
     
+}
+
+int login(int sock){
+    char username[200];
+    char password[200];
+
+    printf("LOGIN PAGE \n");
+    printf("Username: \n");
+    fgets(username,sizeof(username),stdin);
+    send(sock,username,sizeof(username),0);
+    printf("Password: \n");
+    fgets(password,sizeof(password),stdin);
+    send(sock,password,sizeof(password),0);
+
+    printf("Vous êtes maintenant connecté !");
+}
+
+int quit(){
+
 }
