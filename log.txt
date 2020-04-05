@@ -1,0 +1,12 @@
+05/04/2020 [18:32:48]: Socket 3 open
+Waiting for a client on 4001 port
+Le client est bien connecté, socket n°5
+Client connecté socket n°5
+05/04/2020 [18:35:24]: Socket 3 open
+05/04/2020 [18:35:24]: Waiting for a client on 4001 port
+05/04/2020 [18:35:24]: Le client est bien connecté, socket n°5
+05/04/2020 [18:35:24]: Client connecté socket n°5
+05/04/2020 [18:35:57]: Socket 3 open
+05/04/2020 [18:35:57]: Waiting for a client on 4001 port
+05/04/2020 [18:35:57]: Le client est bien connecté, socket n°5
+05/04/2020 [18:35:57]: Client connecté socket n°5

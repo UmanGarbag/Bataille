@@ -48,6 +48,7 @@ int connection(){
             printf("Impossible de se connecter\n");
         }
         /*Appel de la fonction qui permet d'envoyé de la data*/
+        printf("Fonction connection :  sock == %d\n",sock);
         send_data(sock);
     }
 
@@ -59,13 +60,15 @@ int send_data(int sock){
 
     char buffer[256];
     int envoie;
+    int socket = sock;
+    printf("Fonction send_data : socket %d\n",socket);
+
+    printf("Bienvenue au jeu, Bataille Navale !!!\n");
+    printf("\n");
+    printf("1.Login\n2.Création d'un compte\n3.Exit\n");
+    printf("\n");
 
     /*Récupère la saisie du joueur*/
-    fgets(buffer,sizeof(buffer),stdin);
-    
-    printf("Bataille Navale !!!\n");
-    printf("1.Login\n 2.Création d'un compte\n 3.Exit");
-
     fgets(buffer,sizeof(buffer),stdin);
     switch (buffer[0])
     {
@@ -74,6 +77,7 @@ int send_data(int sock){
         break;
     case '2':
         /*FIXME : Appel de la fonction pour crée un compte*/
+        create_account(sock);
         break;
     case '3':
         /*FIXME : Appel de la fonction qui ferme la connection*/
@@ -86,15 +90,54 @@ int send_data(int sock){
     
     
     
-        envoie = send(sock,buffer,sizeof(buffer),0);
+    /*envoie = send(sock,buffer,sizeof(buffer),0);
     if(envoie != SOCKET_ERROR){
         printf("Chaine envoyé : %s\n", buffer);
     }
     else
     {
         perror("erreur d'envoie");
-    }
+    }*/
 
 return EXIT_SUCCESS;
 }
+int create_account(int sock){
+    
+    char username[15];
+    char password[26];
+    printf("Création de votre compte :\n");
+    printf("Quel sera votre username : ");
 
+    fgets(username,sizeof(username),stdin);
+    printf("\n");
+    
+    if(send(sock,username,sizeof(username),0) != SOCKET_ERROR)
+    {
+        printf("Username send\n");
+    }
+    else
+    {
+        perror("Username don't send");
+    }
+    
+    printf("Veuillez choisir un mot de passe :");
+    
+    fgets(password,sizeof(password),stdin);
+    if(send(sock,password,sizeof(password),0) != SOCKET_ERROR)
+    {
+        printf("Password send\n");
+    }
+    else
+    {
+        perror("Password don't send");
+    }
+    
+
+   /* if (strlen(password) < 16)
+    {
+        fgets(password,sizeof(password),stdin);
+    }*/
+
+
+    
+}

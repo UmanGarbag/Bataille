@@ -9,6 +9,7 @@
 #include <pthread.h>
 #include <netdb.h>
 #include <sys/select.h>
+#include <time.h>
 #include "server.h"
 
 
@@ -76,15 +77,40 @@ int create_socket()
    SOCKADDR_IN sin; // serveur
    SOCKADDR_IN csin; // client
    socklen_t crecsize = sizeof(csin);
-   int sock = 0;
-   
+   int sock = 0; 
+   int returnCode;
+
+   /*Appel de la structure time_t pour avoir l'heure dans les logs*/  
+   int h, min, s, day, mois, an;
+   time_t now;
+   time(&now);
+   ctime(&now);
+
+   struct tm *local = localtime(&now);
+   h = local->tm_hour;        
+   min = local->tm_min;        
+   s = local->tm_sec;       
+   day = local->tm_mday;          
+   mois = local->tm_mon + 1;     
+   an = local->tm_year + 1900; 
+
+
    /*Création d'un socket TCP/IP*/
    sock = socket(AF_INET, SOCK_STREAM, 0); 
-   
+    
    /*Si la valeur de return de la socket est différent de -1*/
    if(sock != SOCKET_ERROR)
    {
-        printf("Socket %d, open\n",sock);
+        /*Création et ouverture d'un fichier de log*/
+        FILE * log_file = fopen("log.txt","a");
+        
+        if(log_file == NULL)
+        {
+        fprintf(stderr,"Impossible d'ouvrir le fichier");
+        exit(-1);
+        }
+
+        fprintf(log_file,"%02d/%02d/%d [%02d:%02d:%02d]: Socket %d open\n",day,mois,an,h,min,s,sock);
 
         sin.sin_addr.s_addr = htons(INADDR_ANY);
         sin.sin_family = AF_INET;                 
@@ -103,9 +129,10 @@ int create_socket()
 
         if(listening != SOCKET_ERROR)
             {
-            printf("Waiting for a client on %d port\n",PORT);
+            fprintf(log_file,"%02d/%02d/%d [%02d:%02d:%02d]: Waiting for a client on %d port\n",day,mois,an,h,min,s,PORT);
             }
         }
+
         /*Boucle infinie qui accepte toutes les connexions*/
         while (1)
         {
@@ -121,16 +148,22 @@ int create_socket()
             /*FIXME : Renvoyé les messages dans un fichier de log avec la date + heure*/
             else
             {
-                printf("Le client est bien connecté, socket n°%d\n",*csock);
+                fprintf(log_file,"%02d/%02d/%d [%02d:%02d:%02d]: Le client est bien connecté, socket n°%d\n",day,mois,an,h,min,s,*csock);
 
             }
-            printf("Client connecté socket n°%d\n",*csock);
-            
+            fprintf(log_file,"%02d/%02d/%d [%02d:%02d:%02d]: Client connecté socket n°%d\n",day,mois,an,h,min,s,*csock);
+
+            /*Fermeture du fichier de log */
+            returnCode = fclose(log_file);
+             if (returnCode == EOF){
+            fprintf( stderr, "Erreur durant la fermeture du fichier" );
+            exit( -1 );
+            }           
             /*Appel de notre fonction qui crée un thread */
             create_thread(csock);        
         }
+      
    } 
-        
     return EXIT_SUCCESS;    
 }
 
@@ -141,32 +174,14 @@ void* Func(void* data)
     int *sock = (int*)data;
     char buffer[256] = {0};
     int login;
-    printf("Bataille Navale !!!\n");
-    printf("1.Login\n 2.Création d'un compte\n 3.Exit");
-
-    fgets(buffer,sizeof(buffer),stdin);
-    switch (buffer[0])
-    {
-    case '1':
-        /*FIXME : Appel de la fonction pour ce log*/
-        break;
-    case '2':
-        /*FIXME : Appel de la fonction pour crée un compte*/
-        break;
-    case '3':
-        /*FIXME : Appel de la fonction qui ferme la connection*/
-        break;
-    default:
-        /*FIXME : Appel de la fonction qui envoie le msg d'erreur*/
-        break;
-    }
-
+   
     /*Boucle infinie qui attend de recevoir de la data*/
     while(1)
     {
         if(recv(*sock,buffer,sizeof(buffer),0) != SOCKET_ERROR)
         {
-
+            printf("\n");
+            printf("Data reçu %s\n",buffer);
         }
         else
         {
@@ -210,5 +225,5 @@ int login(){
 }
 
 int create_account(){
-    
+
 }
