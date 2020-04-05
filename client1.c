@@ -6,6 +6,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <sys/select.h>
 
 #include "client.h"
 #define PORT 4001
@@ -16,9 +17,11 @@ typedef struct sockaddr SOCKADDR;
 
 
 int main(){
-        connection();
 
-        return EXIT_SUCCESS;
+    /*Appel de la fonction qui permet la connection au servjeu*/
+    connection();
+
+    return EXIT_SUCCESS;
 }
 
 int connection(){
@@ -30,7 +33,7 @@ int connection(){
     
     if(!erreur)
     {
-        /* Création de la socket */
+        /*Création d'un socket TCP/IP*/
        sock = socket(AF_INET, SOCK_STREAM, 0);
 
         /* Configuration de la connexion */
@@ -38,16 +41,14 @@ int connection(){
         sin.sin_family = AF_INET;
         sin.sin_port = htons(PORT);
  
-        /* Si le client arrive à se connecter */
+        /*Connection du client*/
         if(connect(sock, (SOCKADDR*)&sin, sizeof(sin)) != SOCKET_ERROR)
             printf("Connexion à %s sur le port %d\n", inet_ntoa(sin.sin_addr), htons(sin.sin_port));
         else{
             printf("Impossible de se connecter\n");
         }
+        /*Appel de la fonction qui permet d'envoyé de la data*/
         send_data(sock);
-        /* On ferme la socket précédemment ouverte */
-       // closesocket(sock);
-
     }
 
     return EXIT_SUCCESS;
@@ -56,37 +57,44 @@ int connection(){
 
 int send_data(int sock){
 
-    char phrase[100];
+    char buffer[256];
     int envoie;
 
-  // envoie = send(sock,phrase,sizeof(phrase),0);
-      /*  
-        if(envoie != SOCKET_ERROR){
-            printf("Chaine envoyé : %s\n", phrase);
-        }
-        else
-        {
-            perror("erreur d'envoie");
-        }*/
-    char buf[20] = {0};
-   
-    do
-    {       
-        recv(sock,buf,sizeof(buf),0);
-        buf[strlen(buf)-1] = 0;
-        printf("cli reçoit = %s\n",buf);
-        if (!strcmp(buf,"STOP"))
+    /*Récupère la saisie du joueur*/
+    fgets(buffer,sizeof(buffer),stdin);
+    
+    printf("Bataille Navale !!!\n");
+    printf("1.Login\n 2.Création d'un compte\n 3.Exit");
+
+    fgets(buffer,sizeof(buffer),stdin);
+    switch (buffer[0])
     {
-        printf("Je suis dans le break");
+    case '1':
+        /*FIXME : Appel de la fonction pour ce log*/
+        break;
+    case '2':
+        /*FIXME : Appel de la fonction pour crée un compte*/
+        break;
+    case '3':
+        /*FIXME : Appel de la fonction qui ferme la connection*/
+        break;
+    default:
+        /*FIXME : Appel de la fonction qui envoie le msg d'erreur*/
         break;
     }
-        memset(buf,0,sizeof(buf));
-        fgets(buf,sizeof(buf),stdin);
-        send(sock,buf,sizeof(buf),0);
-        memset(buf,0,sizeof(buf));
 
-    } while (1);
     
-    return EXIT_SUCCESS;
+    
+    
+        envoie = send(sock,buffer,sizeof(buffer),0);
+    if(envoie != SOCKET_ERROR){
+        printf("Chaine envoyé : %s\n", buffer);
+    }
+    else
+    {
+        perror("erreur d'envoie");
+    }
+
+return EXIT_SUCCESS;
 }
 
