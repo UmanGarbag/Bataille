@@ -78,22 +78,6 @@ int create_socket()
    SOCKADDR_IN csin; // client
    socklen_t crecsize = sizeof(csin);
    int sock = 0; 
-   int returnCode;
-
-   /*Appel de la structure time_t pour avoir l'heure dans les logs*/  
-   int h, min, s, day, mois, an;
-   time_t now;
-   time(&now);
-   ctime(&now);
-
-   struct tm *local = localtime(&now);
-   h = local->tm_hour;        
-   min = local->tm_min;        
-   s = local->tm_sec;       
-   day = local->tm_mday;          
-   mois = local->tm_mon + 1;     
-   an = local->tm_year + 1900; 
-
 
    /*Création d'un socket TCP/IP*/
    sock = socket(AF_INET, SOCK_STREAM, 0); 
@@ -102,15 +86,10 @@ int create_socket()
    if(sock != SOCKET_ERROR)
    {
         /*Création et ouverture d'un fichier de log*/
-        FILE * log_file = fopen("log_server.txt","w");
-        
-        if(log_file == NULL)
-        {
-        fprintf(stderr,"Impossible d'ouvrir le fichier");
-        exit(-1);
-        }
+        char buffer[2048];
 
-        fprintf(log_file,"%02d/%02d/%d [%02d:%02d:%02d]: Socket %d open\n",day,mois,an,h,min,s,sock);
+        sprintf(buffer,"Socket %d open\0",sock);
+        func_log(buffer);
 
         sin.sin_addr.s_addr = htons(INADDR_ANY);
         sin.sin_family = AF_INET;                 
@@ -129,7 +108,8 @@ int create_socket()
 
         if(listening != SOCKET_ERROR)
             {
-            fprintf(log_file,"%02d/%02d/%d [%02d:%02d:%02d]: Waiting for a client on %d port\n",day,mois,an,h,min,s,PORT);
+               sprintf(buffer," Waiting for a client on %d port\n",PORT);
+               func_log(buffer);
             }
         }
 
@@ -148,17 +128,12 @@ int create_socket()
             /*FIXME : Renvoyé les messages dans un fichier de log avec la date + heure*/
             else
             {
-                fprintf(log_file,"%02d/%02d/%d [%02d:%02d:%02d]: Le client est bien connecté, socket n°%d\n",day,mois,an,h,min,s,*csock);
-
+                sprintf(buffer," Le client est bien connecté, socket n°%d\n",*csock);
+                func_log(buffer);
             }
-            fprintf(log_file,"%02d/%02d/%d [%02d:%02d:%02d]: Client connecté socket n°%d\n",day,mois,an,h,min,s,*csock);
-
-            /*Fermeture du fichier de log */
-            returnCode = fclose(log_file);
-             if (returnCode == EOF){
-            fprintf( stderr, "Erreur durant la fermeture du fichier" );
-            exit( -1 );
-            }           
+                sprintf(buffer,"Client connecté, socket n°%d\n",*csock);
+                func_log(buffer);
+            
             /*Appel de notre fonction qui crée un thread */
             create_thread(csock);        
         }
@@ -169,11 +144,45 @@ int create_socket()
 
 /*Fonction appeler par notre thread, le param data == valeur de la socket*/
 
+int func_log(char* log)
+{
+   int h, min, s, day, mois, an;   
+   time_t now;
+   time(&now);
+   ctime(&now);
+
+   struct tm *local = localtime(&now);
+   h = local->tm_hour;        
+   min = local->tm_min;        
+   s = local->tm_sec;       
+   day = local->tm_mday;          
+   mois = local->tm_mon + 1;     
+   an = local->tm_year + 1900; 
+
+    FILE* log_file = fopen("log_server.txt","a+");
+        
+    if(log_file == NULL)
+    {
+        fprintf(stderr,"Impossible d'ouvrir le fichier");
+        return -1;
+    }
+        
+    fprintf(log_file,"%02d/%02d/%d [%02d:%02d:%02d]: %s\n",day,mois,an,h,min,s,log);
+
+    if (fclose(log_file) == EOF)
+    {
+        fprintf( stderr, "Erreur durant la fermeture du fichier" );
+        return -1;
+    }
+
+    return 0;
+}
+
 void* Func(void* data)
 {
     int *sock = (int*)data;
     char buffer[256] = {0};
-    FILE * 
+    
     /*Boucle infinie qui attend de recevoir de la data*/
     while(1)
     {
@@ -200,7 +209,7 @@ void* Func(void* data)
 int create_thread(int *csock){
 
     /*Création d'une variable pour notre thread */
-
+    char buffer[2048];
     pthread_t thread1; 
 
     int pthread_err;
@@ -214,7 +223,8 @@ int create_thread(int *csock){
     }
     else
     {
-        printf("thread n°%d create\n",pthread_err);
+        sprintf(buffer,"thread n°%d create\n",pthread_err);
+        func_log(buffer);
     }
 
 }
