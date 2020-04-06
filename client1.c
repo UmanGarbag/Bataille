@@ -16,6 +16,29 @@
 typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
 
+static void purger(void)
+{
+    int c;
+
+    while ((c = getchar()) != '\n' && c != EOF)
+    {}
+}
+
+static void clean (char *chaine)
+{
+    char *p = strchr(chaine, '\n');
+
+    if (p)
+    {
+        *p = 0;
+    }
+
+    else
+    {
+        purger();
+    }
+}
+
 
 int main(){
 
@@ -129,9 +152,9 @@ int create_account(int sock){
     
     fgets(password,sizeof(password),stdin);
 
-    while(strlen(password) < 16){
+    while(strlen(password) < 9){
+        printf("Password faible, recommencer : ");
         fgets(password,sizeof(password),stdin);
-        printf("Password faible, recommencer");
     }
 
     if(send(sock,password,sizeof(password),0) != SOCKET_ERROR)
@@ -139,26 +162,34 @@ int create_account(int sock){
         printf("Password send\n");
     }
     else
+
     {
-        perror("Password don't send");
+        perror("Password don't send\n");
     }
     
     printf("Compte crée ! Bienvenue %s\n",username);
 
-    while(buf[0] != '1'){
-        printf("Taper 1 pour vous connectez ou 3 pour Exit !\n");
-        fgets(buf,sizeof(buf),stdin);
-        if(strcmp(buf,"1")){
-            login();
-        }
-        else if(strcmp(buf,"3")){
-            quit();
-        }
-    }
-    /*Appel de la fonction login, pour après la création du compte se connecters*/
     
-    
+    do
+  {
+    memset(buf, 0, 20);
+    printf("Taper 1 pour vous connectez ou 3 pour Exit !\n");
 
+    fgets(buf,sizeof(buf),stdin);
+    clean(buf);
+
+  
+    if(strcmp(buf,"1") == 0){
+      login();
+      
+    }
+    else if(strcmp(buf,"3") == 0){
+      quit();
+    }
+    
+    }while(*buf != '1' && *buf != '3');
+   
+    /*Appel de la fonction login, pour après la création du compte se connecters*/
     
 }
 
@@ -178,5 +209,6 @@ int login(int sock){
 }
 
 int quit(){
-
+    printf("Au revoir !\n");
+    exit(EXIT_SUCCESS);
 }

@@ -102,7 +102,7 @@ int create_socket()
    if(sock != SOCKET_ERROR)
    {
         /*Création et ouverture d'un fichier de log*/
-        FILE * log_file = fopen("log.txt","a");
+        FILE * log_file = fopen("log_server.txt","w");
         
         if(log_file == NULL)
         {
@@ -173,8 +173,7 @@ void* Func(void* data)
 {
     int *sock = (int*)data;
     char buffer[256] = {0};
-    int login;
-   
+    FILE * 
     /*Boucle infinie qui attend de recevoir de la data*/
     while(1)
     {

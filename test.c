@@ -1,41 +1,51 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
+
+static void purger(void)
+{
+    int c;
+
+    while ((c = getchar()) != '\n' && c != EOF)
+    {}
+}
+
+static void clean (char *chaine)
+{
+    char *p = strchr(chaine, '\n');
+
+    if (p)
+    {
+        *p = 0;
+    }
+
+    else
+    {
+        purger();
+    }
+}
+
+
 int main() {
-    int h, min, s, day, mois, an;
-    time_t now;
+  char buf[20];  
+  do
+  {
+    memset(buf, 0, 20);
+    printf("Taper 1 pour vous connectez ou 3 pour Exit !\n");
 
-  time(&now);
+    fgets(buf,sizeof(buf),stdin);
+    clean(buf);
 
-    ctime(&now);
-
-  struct tm *local = localtime(&now);
-  h = local->tm_hour;        
-  min = local->tm_min;       
-  s = local->tm_sec;       
-  day = local->tm_mday;          
-  mois = local->tm_mon + 1;     
-  an = local->tm_year + 1900;  
-
-
-
-    
-    int returnCode;
-    FILE *file = fopen("destination.txt","w");
-    
-    if ( file == NULL ) {
-        fprintf( stderr, "Erreur durant l'ouverture du fichier" );
-        exit( -1 );
+  
+    if(strcmp(buf,"1") == 0){
+      printf("login\n");
+      
+    }
+    else if(strcmp(buf,"3") == 0){
+      printf("quit\n");
     }
     
 
-    fprintf( file, "Date : %02d/%02d/%d, heure :  [%02d:%02d:%02d] ",day,mois,an,h,min,s);
-        
-    returnCode = fclose(file);
-    if ( returnCode == EOF ) {
-        fprintf( stderr, "Erreur durant la fermeture du fichier" );
-        exit( -1 );
-    }
-    
-    return 0;
+  }while(*buf != '1' && *buf != '3');
 }   
