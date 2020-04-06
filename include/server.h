@@ -5,3 +5,5 @@ int status();
 void* Func(void* data);
 int create_thread(int *csock);
 int func_log(char* log);
+static void clean (char *chaine);
+static void purger(void);

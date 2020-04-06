@@ -15,9 +15,32 @@
 
 #define SOCKET_ERROR -1
 #define PORT 4001
-
+#define SIZE_BUFFER 16
 typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
+
+static void purger(void)
+{
+    int c;
+
+    while ((c = getchar()) != '\n' && c != EOF)
+    {}
+}
+
+static void clean (char *chaine)
+{
+    char *p = strchr(chaine, '\n');
+
+    if (p)
+    {
+        *p = 0;
+    }
+
+    else
+    {
+        purger();
+    }
+}
 
 
 int main(int argc, char **argv) {
@@ -144,6 +167,89 @@ int create_socket()
 
 /*Fonction appeler par notre thread, le param data == valeur de la socket*/
 
+
+void* Func(void* data)
+{
+    int *sock = (int*)data;
+    char  buffer[SIZE_BUFFER] = {0};
+    char  buffer2[SIZE_BUFFER] = {0};          
+    FILE* credentials = NULL;
+
+    credentials = fopen("credentials.txt","ab+"); 
+
+    if(credentials == NULL){
+        pthread_exit(NULL);
+    }
+    /*Boucle infinie qui attend de recevoir de la data*/
+    int i = 0;
+    while(i < 2)
+    {
+        memset(buffer, 0, SIZE_BUFFER);
+        printf("J'ai recu : %d octets\n",recv(*sock, buffer, SIZE_BUFFER, 0));
+        printf("J'ai recu : |%s|\n", buffer);
+        fwrite(buffer, 1, SIZE_BUFFER, credentials);
+        i++;
+    }
+
+    int j = 0;
+
+        rewind(credentials);
+        while(j < 2)
+        {
+            memset(buffer, 0, SIZE_BUFFER);
+            memset(buffer2, 0, SIZE_BUFFER);
+            fread(buffer, 1, SIZE_BUFFER, credentials);
+            fread(buffer2, 1, SIZE_BUFFER, credentials);
+            printf("ID : |%s|MDP : |%s|\n", buffer, buffer2);
+            j++;
+        }
+
+    /*On libére l'espace mémoire du malloc pour la socket*/
+    free(sock);
+    
+    /*Arret du thread*/
+    pthread_exit(NULL);
+        
+    
+
+     if (fclose(credentials) == EOF)
+    {
+        fprintf( stderr, "Erreur durant la fermeture du fichier" );
+        exit(-1);
+    }
+   
+    
+} 
+
+#define SIZE_BUFFER 16
+
+ 
+
+int create_thread(int *csock){
+
+    /*Création d'une variable pour notre thread */
+    char buffer[2048];
+    pthread_t thread1; 
+
+    int pthread_err;
+
+    /*Création de notre thread, avec comme params: notre thread, NULL, Func(fonction à executé par le thread), notre socket*/
+
+    pthread_err = pthread_create(&thread1, NULL, Func, (void *)csock);
+    if (pthread_err == -1)
+    {
+        perror("thread create cancel");
+    }
+    else
+    {
+        sprintf(buffer,"thread n°%d create\n",pthread_err);
+        func_log(buffer);
+    }
+
+}
+  
+
+
 int func_log(char* log)
 {
    int h, min, s, day, mois, an;   
@@ -177,57 +283,3 @@ int func_log(char* log)
 
     return 0;
 }
-
-void* Func(void* data)
-{
-    int *sock = (int*)data;
-    char buffer[256] = {0};
-    
-    /*Boucle infinie qui attend de recevoir de la data*/
-    while(1)
-    {
-        if(recv(*sock,buffer,sizeof(buffer),0) != SOCKET_ERROR)
-        {
-            printf("\n");
-            printf("Data reçu %s\n",buffer);
-        }
-        else
-        {
-            perror("recv");
-        }
-        
-    }
-
-    /*On libére l'espace mémoire du malloc pour la socket*/
-    free(sock);
-    
-    /*Arret du thread*/
-    pthread_exit(NULL);
-    
-}  
-    
-int create_thread(int *csock){
-
-    /*Création d'une variable pour notre thread */
-    char buffer[2048];
-    pthread_t thread1; 
-
-    int pthread_err;
-
-    /*Création de notre thread, avec comme params: notre thread, NULL, Func(fonction à executé par le thread), notre socket*/
-
-    pthread_err = pthread_create(&thread1, NULL, Func, (void *)csock);
-    if (pthread_err == -1)
-    {
-        perror("thread create cancel");
-    }
-    else
-    {
-        sprintf(buffer,"thread n°%d create\n",pthread_err);
-        func_log(buffer);
-    }
-
-}
-
-
-

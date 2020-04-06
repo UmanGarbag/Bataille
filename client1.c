@@ -11,6 +11,7 @@
 
 #include "client.h"
 #define PORT 4001
+#define MAX_PASSWORD 9
 #define closesocket(s) close(s)
 #define SOCKET_ERROR -1
 typedef struct sockaddr_in SOCKADDR_IN;
@@ -130,8 +131,8 @@ return EXIT_SUCCESS;
 
 int create_account(int sock){
     
-    char username[15];
-    char password[26];
+    char username[16] = {0};
+    char password[16] = {0};
     char buf[200];
     
     printf("Quel sera votre username ? : ");
@@ -152,7 +153,7 @@ int create_account(int sock){
     
     fgets(password,sizeof(password),stdin);
 
-    while(strlen(password) < 9){
+    while(strlen(password) < MAX_PASSWORD){
         printf("Password faible, recommencer : ");
         fgets(password,sizeof(password),stdin);
     }
@@ -193,19 +194,32 @@ int create_account(int sock){
     
 }
 
+#define SIZE_BUFFER 16
+
 int login(int sock){
-    char username[200];
-    char password[200];
+    char username[SIZE_BUFFER];
+    char password[SIZE_BUFFER];
 
     printf("LOGIN PAGE \n");
     printf("Username: \n");
-    fgets(username,sizeof(username),stdin);
-    send(sock,username,sizeof(username),0);
-    printf("Password: \n");
-    fgets(password,sizeof(password),stdin);
-    send(sock,password,sizeof(password),0);
+    fgets(username,SIZE_BUFFER,stdin);
+    clean(username);
+    printf("username = |%s|\n", username);
+        if(send(sock,username,SIZE_BUFFER,0) != SOCKET_ERROR){
+            printf("Username send\n");
+        }
+    
 
-    printf("Vous êtes maintenant connecté !");
+    printf("Password: \n");
+    fgets(password,SIZE_BUFFER,stdin);
+    
+    clean(password);
+    printf("password = |%s|\n", password);
+       if(send(sock,password,SIZE_BUFFER,0) != SOCKET_ERROR){    
+            printf("Password send\n");
+       }
+   
+    printf("Vous êtes maintenant connecté !\n");
 }
 
 int quit(){

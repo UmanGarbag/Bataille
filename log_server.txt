@@ -11,3 +11,360 @@
 
 06/04/2020 [17:31:40]: thread n°0 create
 
+06/04/2020 [20:19:50]: Socket 3 open
+06/04/2020 [20:19:50]:  Waiting for a client on 4001 port
+
+06/04/2020 [20:20:08]:  Le client est bien connecté, socket n°4
+
+06/04/2020 [20:20:08]: Client connecté, socket n°4
+
+06/04/2020 [20:20:08]: thread n°0 create
+
+06/04/2020 [21:11:46]: Socket 3 open
+06/04/2020 [21:11:46]:  Waiting for a client on 4001 port
+
+06/04/2020 [21:11:58]:  Le client est bien connecté, socket n°4
+
+06/04/2020 [21:11:58]: Client connecté, socket n°4
+
+06/04/2020 [21:11:58]: thread n°0 create
+
+06/04/2020 [23:35:07]: Socket 3 open
+06/04/2020 [23:35:07]:  Waiting for a client on 4001 port
+
+06/04/2020 [23:35:25]:  Le client est bien connecté, socket n°4
+
+06/04/2020 [23:35:25]: Client connecté, socket n°4
+
+06/04/2020 [23:35:25]: thread n°0 create
+
+06/04/2020 [23:38:27]: Socket 3 open
+06/04/2020 [23:38:27]:  Waiting for a client on 4001 port
+
+06/04/2020 [23:38:28]:  Le client est bien connecté, socket n°4
+
+06/04/2020 [23:38:28]: Client connecté, socket n°4
+
+06/04/2020 [23:38:28]: thread n°0 create
+
+06/04/2020 [23:39:38]: Socket 3 open
+06/04/2020 [23:39:38]:  Waiting for a client on 4001 port
+
+06/04/2020 [23:39:40]:  Le client est bien connecté, socket n°4
+
+06/04/2020 [23:39:40]: Client connecté, socket n°4
+
+06/04/2020 [23:39:40]: thread n°0 create
+
+06/04/2020 [23:50:15]: Socket 3 open
+06/04/2020 [23:50:15]:  Waiting for a client on 4001 port
+
+06/04/2020 [23:50:17]:  Le client est bien connecté, socket n°4
+
+06/04/2020 [23:50:17]: Client connecté, socket n°4
+
+06/04/2020 [23:50:17]: thread n°0 create
+
+06/04/2020 [23:52:00]: Socket 3 open
+06/04/2020 [23:52:00]:  Waiting for a client on 4001 port
+
+06/04/2020 [23:52:02]:  Le client est bien connecté, socket n°4
+
+06/04/2020 [23:52:02]: Client connecté, socket n°4
+
+06/04/2020 [23:52:02]: thread n°0 create
+
+06/04/2020 [23:54:21]: Socket 3 open
+06/04/2020 [23:54:22]:  Waiting for a client on 4001 port
+
+06/04/2020 [23:54:26]:  Le client est bien connecté, socket n°4
+
+06/04/2020 [23:54:26]: Client connecté, socket n°4
+
+06/04/2020 [23:54:26]: thread n°0 create
+
+06/04/2020 [23:55:58]: Socket 3 open
+06/04/2020 [23:55:58]:  Waiting for a client on 4001 port
+
+06/04/2020 [23:55:58]:  Le client est bien connecté, socket n°4
+
+06/04/2020 [23:55:58]: Client connecté, socket n°4
+
+06/04/2020 [23:55:58]: thread n°0 create
+
+06/04/2020 [23:56:15]: Socket 3 open
+06/04/2020 [23:56:15]:  Waiting for a client on 4001 port
+
+06/04/2020 [23:56:16]:  Le client est bien connecté, socket n°4
+
+06/04/2020 [23:56:16]: Client connecté, socket n°4
+
+06/04/2020 [23:56:16]: thread n°0 create
+
+06/04/2020 [23:56:55]: Socket 3 open
+06/04/2020 [23:56:55]:  Waiting for a client on 4001 port
+
+06/04/2020 [23:57:20]:  Le client est bien connecté, socket n°4
+
+06/04/2020 [23:57:20]: Client connecté, socket n°4
+
+06/04/2020 [23:57:20]: thread n°0 create
+
+07/04/2020 [00:09:53]: Socket 3 open
+07/04/2020 [00:09:53]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:10:06]: Socket 3 open
+07/04/2020 [00:10:06]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:10:07]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:10:07]: Client connecté, socket n°4
+
+07/04/2020 [00:10:07]: thread n°0 create
+
+07/04/2020 [00:11:25]: Socket 3 open
+07/04/2020 [00:11:25]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:11:25]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:11:25]: Client connecté, socket n°4
+
+07/04/2020 [00:11:25]: thread n°0 create
+
+07/04/2020 [00:13:03]: Socket 3 open
+07/04/2020 [00:13:03]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:13:10]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:13:10]: Client connecté, socket n°4
+
+07/04/2020 [00:13:10]: thread n°0 create
+
+07/04/2020 [00:14:36]: Socket 3 open
+07/04/2020 [00:14:36]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:14:38]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:14:38]: Client connecté, socket n°4
+
+07/04/2020 [00:14:38]: thread n°0 create
+
+07/04/2020 [00:28:52]: Socket 3 open
+07/04/2020 [00:28:52]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:28:56]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:28:56]: Client connecté, socket n°4
+
+07/04/2020 [00:28:56]: thread n°0 create
+
+07/04/2020 [00:30:35]: Socket 3 open
+07/04/2020 [00:30:35]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:30:38]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:30:38]: Client connecté, socket n°4
+
+07/04/2020 [00:30:38]: thread n°0 create
+
+07/04/2020 [00:31:28]: Socket 3 open
+07/04/2020 [00:31:28]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:31:29]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:31:29]: Client connecté, socket n°4
+
+07/04/2020 [00:31:29]: thread n°0 create
+
+07/04/2020 [00:33:13]: Socket 3 open
+07/04/2020 [00:33:13]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:33:14]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:33:14]: Client connecté, socket n°4
+
+07/04/2020 [00:33:14]: thread n°0 create
+
+07/04/2020 [00:36:09]: Socket 3 open
+07/04/2020 [00:36:09]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:36:09]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:36:09]: Client connecté, socket n°4
+
+07/04/2020 [00:36:09]: thread n°0 create
+
+07/04/2020 [00:37:55]: Socket 3 open
+07/04/2020 [00:37:55]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:37:56]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:37:56]: Client connecté, socket n°4
+
+07/04/2020 [00:37:56]: thread n°0 create
+
+07/04/2020 [00:38:23]: Socket 3 open
+07/04/2020 [00:38:23]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:38:25]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:38:25]: Client connecté, socket n°4
+
+07/04/2020 [00:38:25]: thread n°0 create
+
+07/04/2020 [00:38:48]: Socket 3 open
+07/04/2020 [00:38:48]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:38:50]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:38:50]: Client connecté, socket n°4
+
+07/04/2020 [00:38:50]: thread n°0 create
+
+07/04/2020 [00:40:17]: Socket 3 open
+07/04/2020 [00:40:17]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:40:32]: Socket 3 open
+07/04/2020 [00:40:32]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:40:33]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:40:33]: Client connecté, socket n°4
+
+07/04/2020 [00:40:33]: thread n°0 create
+
+07/04/2020 [00:42:39]: Socket 3 open
+07/04/2020 [00:42:39]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:42:47]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:42:47]: Client connecté, socket n°4
+
+07/04/2020 [00:42:47]: thread n°0 create
+
+07/04/2020 [00:50:34]: Socket 3 open
+07/04/2020 [00:50:34]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:50:43]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:50:43]: Client connecté, socket n°4
+
+07/04/2020 [00:50:43]: thread n°0 create
+
+07/04/2020 [00:53:02]: Socket 3 open
+07/04/2020 [00:53:02]:  Waiting for a client on 4001 port
+
+07/04/2020 [00:53:03]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [00:53:03]: Client connecté, socket n°4
+
+07/04/2020 [00:53:03]: thread n°0 create
+
+07/04/2020 [01:01:46]: Socket 3 open
+07/04/2020 [01:01:46]:  Waiting for a client on 4001 port
+
+07/04/2020 [01:01:47]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [01:01:47]: Client connecté, socket n°4
+
+07/04/2020 [01:01:47]: thread n°0 create
+
+07/04/2020 [01:03:11]: Socket 3 open
+07/04/2020 [01:03:11]:  Waiting for a client on 4001 port
+
+07/04/2020 [01:03:11]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [01:03:11]: Client connecté, socket n°4
+
+07/04/2020 [01:03:11]: thread n°0 create
+
+07/04/2020 [01:05:52]: Socket 3 open
+07/04/2020 [01:05:52]:  Waiting for a client on 4001 port
+
+07/04/2020 [01:05:54]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [01:05:54]: Client connecté, socket n°4
+
+07/04/2020 [01:05:54]: thread n°0 create
+
+07/04/2020 [01:06:30]: Socket 3 open
+07/04/2020 [01:06:30]:  Waiting for a client on 4001 port
+
+07/04/2020 [01:06:30]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [01:06:30]: Client connecté, socket n°4
+
+07/04/2020 [01:06:30]: thread n°0 create
+
+07/04/2020 [01:07:38]: Socket 3 open
+07/04/2020 [01:07:38]:  Waiting for a client on 4001 port
+
+07/04/2020 [01:07:39]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [01:07:39]: Client connecté, socket n°4
+
+07/04/2020 [01:07:39]: thread n°0 create
+
+07/04/2020 [01:10:24]: Socket 3 open
+07/04/2020 [01:10:24]:  Waiting for a client on 4001 port
+
+07/04/2020 [01:10:25]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [01:10:25]: Client connecté, socket n°4
+
+07/04/2020 [01:10:25]: thread n°0 create
+
+07/04/2020 [01:11:57]: Socket 3 open
+07/04/2020 [01:11:57]:  Waiting for a client on 4001 port
+
+07/04/2020 [01:11:59]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [01:11:59]: Client connecté, socket n°4
+
+07/04/2020 [01:11:59]: thread n°0 create
+
+07/04/2020 [01:13:45]: Socket 3 open
+07/04/2020 [01:13:45]:  Waiting for a client on 4001 port
+
+07/04/2020 [01:13:45]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [01:13:45]: Client connecté, socket n°4
+
+07/04/2020 [01:13:45]: thread n°0 create
+
+07/04/2020 [01:14:53]: Socket 3 open
+07/04/2020 [01:14:53]:  Waiting for a client on 4001 port
+
+07/04/2020 [01:14:53]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [01:14:53]: Client connecté, socket n°4
+
+07/04/2020 [01:14:53]: thread n°0 create
+
+07/04/2020 [01:23:33]: Socket 3 open
+07/04/2020 [01:23:33]:  Waiting for a client on 4001 port
+
+07/04/2020 [01:23:37]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [01:23:37]: Client connecté, socket n°4
+
+07/04/2020 [01:23:37]: thread n°0 create
+
+07/04/2020 [01:25:41]: Socket 3 open
+07/04/2020 [01:25:41]:  Waiting for a client on 4001 port
+
+07/04/2020 [01:25:44]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [01:25:44]: Client connecté, socket n°4
+
+07/04/2020 [01:25:44]: thread n°0 create
+
+07/04/2020 [01:26:16]: Socket 3 open
+07/04/2020 [01:26:16]:  Waiting for a client on 4001 port
+
+07/04/2020 [01:26:20]:  Le client est bien connecté, socket n°4
+
+07/04/2020 [01:26:20]: Client connecté, socket n°4
+
+07/04/2020 [01:26:20]: thread n°0 create
+
