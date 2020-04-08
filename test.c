@@ -2,6 +2,30 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <errno.h>
+int check_in_file(char* buffer);
+#define SIZE_BUFFER 16
+  /*   
+    int main()
+    {
+        FILE * Handle = fopen("readtext.txt", "r");
+        if(Handle != NULL) {
+            char Temp[16];
+           // printf("value temp = %s\n taille temp == %d\n",Temp,strlen(Temp));
+            int I;
+            Temp[3] = 0;
+            for(I = 1; I <= 2; I++) {
+                fread(Temp,strlen(Temp),1,Handle);
+                printf("%i:%s\n",I,Temp);
+            }
+            fclose(Handle);
+        }
+        return 0;
+    }
+*/
+
+
+
 
 static void purger(void)
 {
@@ -28,24 +52,34 @@ static void clean (char *chaine)
 
 
 int main() {
-  char buf[20];  
-  do
-  {
-    memset(buf, 0, 20);
-    printf("Taper 1 pour vous connectez ou 3 pour Exit !\n");
+ 
+    char buffer[SIZE_BUFFER] = "samuel";
+    check_in_file(buffer);
 
-    fgets(buf,sizeof(buf),stdin);
-    clean(buf);
+}   
 
-  
-    if(strcmp(buf,"1") == 0){
-      printf("login\n");
-      
-    }
-    else if(strcmp(buf,"3") == 0){
-      printf("quit\n");
+int check_in_file(char* buffer){
+
+    //Ouverture fichier
+    FILE * credentials;
+    char buf[SIZE_BUFFER] = {0};
+    credentials = fopen("credentials.txt","r+");
+    
+    if(credentials != NULL){
+        
+        while(fgets(buf,SIZE_BUFFER, credentials) != NULL){
+            if(strcmp(buffer,buf) == 0){
+            printf("Connecté, bienvenue %s !\n",buf);
+            }
+        else{
+            printf("Aucun compte avec ce username\n");
+            }
+      }
     }
     
-
-  }while(*buf != '1' && *buf != '3');
-}   
+    else {
+        perror("fopen");
+        return EXIT_FAILURE;
+    }
+    fclose(credentials);
+}

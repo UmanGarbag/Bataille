@@ -173,36 +173,22 @@ void* Func(void* data)
     int *sock = (int*)data;
     char  buffer[SIZE_BUFFER] = {0};
     char  buffer2[SIZE_BUFFER] = {0};          
-    FILE* credentials = NULL;
+  
 
-    credentials = fopen("credentials.txt","ab+"); 
-
-    if(credentials == NULL){
+    /*if(credentials == NULL){
         pthread_exit(NULL);
-    }
+    }*/
     /*Boucle infinie qui attend de recevoir de la data*/
     int i = 0;
-    while(i < 2)
+    while(i < 6)
     {
-        memset(buffer, 0, SIZE_BUFFER);
-        printf("J'ai recu : %d octets\n",recv(*sock, buffer, SIZE_BUFFER, 0));
-        printf("J'ai recu : |%s|\n", buffer);
-        fwrite(buffer, 1, SIZE_BUFFER, credentials);
-        i++;
-    }
-
-    int j = 0;
-
-        rewind(credentials);
-        while(j < 2)
-        {
-            memset(buffer, 0, SIZE_BUFFER);
-            memset(buffer2, 0, SIZE_BUFFER);
-            fread(buffer, 1, SIZE_BUFFER, credentials);
-            fread(buffer2, 1, SIZE_BUFFER, credentials);
-            printf("ID : |%s|MDP : |%s|\n", buffer, buffer2);
-            j++;
+       // memset(buffer, 0, SIZE_BUFFER);
+        if(recv(*sock, buffer, SIZE_BUFFER, 0) != SOCKET_ERROR){
+            check_in_file(*sock,buffer);
+            printf("J'ai recu : |%s|\n", buffer);
         }
+      
+    }
 
     /*On libére l'espace mémoire du malloc pour la socket*/
     free(sock);
@@ -210,18 +196,16 @@ void* Func(void* data)
     /*Arret du thread*/
     pthread_exit(NULL);
         
-    
 
-     if (fclose(credentials) == EOF)
+     /*if (fclose(credentials) == EOF)
     {
         fprintf( stderr, "Erreur durant la fermeture du fichier" );
         exit(-1);
-    }
+    }*/
    
     
 } 
 
-#define SIZE_BUFFER 16
 
  
 
@@ -282,4 +266,36 @@ int func_log(char* log)
     }
 
     return 0;
+}
+
+int check_in_file(int sock,char* buffer){
+
+    //Ouverture fichier
+    char buf[SIZE_BUFFER] = {0};
+
+    FILE * credentials;
+    credentials = fopen("credentials.txt","r+");
+    
+    if(credentials != NULL){
+      /*Faire deux fichier distincs pour le login et le mot de passe
+      Dans la fonction check_in_file rajouter une ouverte de fichier pour le password.txt
+      Crée un 2ème buffer dans la fonction Fun(thread main) pour le password le premier etant pour le username
+       Surement deux fonctions une int check_username(int sock, char* buffer1) pour verifier le login et une autre check_password(int sock,char *buffer2) pour check le password c plus simple*/  
+        while(fgets(buf,SIZE_BUFFER, credentials) != NULL){
+            if(strcmp(buffer,buf) == 0){
+                if(send(sock,buf,SIZE_BUFFER,0) != SOCKET_ERROR){
+                    printf("Connecté, bienvenue %s !\n",buf);
+                }
+            }
+        else{
+            printf("Aucun compte avec ce username\n");
+            }
+      }
+    }
+    
+    else {
+        perror("fopen");
+        return EXIT_FAILURE;
+    }
+    fclose(credentials);
 }
