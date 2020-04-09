@@ -277,10 +277,15 @@ int check_in_file(int sock,char* buffer){
     credentials = fopen("credentials.txt","r+");
     
     if(credentials != NULL){
+
+    /*------------------------FIXME---------------------------------------------------------------------------------------------------------------------------------------------------------------*/  
       /*Faire deux fichier distincs pour le login et le mot de passe
       Dans la fonction check_in_file rajouter une ouverte de fichier pour le password.txt
       Crée un 2ème buffer dans la fonction Fun(thread main) pour le password le premier etant pour le username
        Surement deux fonctions une int check_username(int sock, char* buffer1) pour verifier le login et une autre check_password(int sock,char *buffer2) pour check le password c plus simple*/  
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+      
+      
         while(fgets(buf,SIZE_BUFFER, credentials) != NULL){
             if(strcmp(buffer,buf) == 0){
                 if(send(sock,buf,SIZE_BUFFER,0) != SOCKET_ERROR){

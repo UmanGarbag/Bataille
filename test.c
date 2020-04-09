@@ -1,10 +1,10 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <errno.h>
-int check_in_file(char* buffer);
+#include <ncurses.h>
 #define SIZE_BUFFER 16
+int check_in_file(char* buffer);
   /*   
     int main()
     {
@@ -24,39 +24,6 @@ int check_in_file(char* buffer);
     }
 */
 
-
-
-
-static void purger(void)
-{
-    int c;
-
-    while ((c = getchar()) != '\n' && c != EOF)
-    {}
-}
-
-static void clean (char *chaine)
-{
-    char *p = strchr(chaine, '\n');
-
-    if (p)
-    {
-        *p = 0;
-    }
-
-    else
-    {
-        purger();
-    }
-}
-
-
-int main() {
- 
-    char buffer[SIZE_BUFFER] = "samuel";
-    check_in_file(buffer);
-
-}   
 
 int check_in_file(char* buffer){
 
@@ -82,4 +49,79 @@ int check_in_file(char* buffer){
         return EXIT_FAILURE;
     }
     fclose(credentials);
+}
+
+static void purger(void)
+{
+    int c;
+
+    while ((c = getchar()) != '\n' && c != EOF)
+    {}
+}
+
+static void clean (char *chaine)
+{
+    char *p = strchr(chaine, '\n');
+
+    if (p)
+    {
+        *p = 0;
+    }
+
+    else
+    {
+        purger();
+    }
+}
+
+void afficheMot(char * mot){
+    char i = 0;
+    while(mot[i]!='\0'){
+        printf("%c",mot[i]);
+        i++;
+    }
+  /*  while(mot[j] != '\0'){
+        printf("%c",mot[j]);
+        j++;
+    }*/
+    printf("\n");
+}
+
+
+
+#define GRAPH_SIZE 10
+int main() {
+
+   char graph[15][15];  
+   int i,j;
+
+    for(int i = 0; i < 11; i++)
+    {
+        for(j = 0; j < 11; j++){
+            
+            scanf("%c",graph[i][j]);
+            printf("i = %d\n j = %d\n",i,j);
+    }
+    }
+    
+    /*
+    for(i=0;i<10;i++)
+    {
+        graph[i][i] = '*';
+    }
+
+    for(int i = 0; i < 11; i++)
+    {
+        for(j = 0; j < 11; j++){
+            
+            printf("%c",graph[i][j]);
+        }
+        putchar('\n');
+    }
+    */
+    return 0;
+} 
+
+int generate_graph(int size){
+    return 0;
 }
