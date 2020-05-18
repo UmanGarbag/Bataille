@@ -1,55 +1,23 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <netdb.h>
+#include <sys/select.h>
 #include <time.h>
-#include <errno.h>
-#include <ncurses.h>
+#include "msg.h"
+int check_username(char* buffer);
+
+#define SOCKET_ERROR -1
+#define PORT 4001
 #define SIZE_BUFFER 16
-int check_in_file(char* buffer);
-  /*   
-    int main()
-    {
-        FILE * Handle = fopen("readtext.txt", "r");
-        if(Handle != NULL) {
-            char Temp[16];
-           // printf("value temp = %s\n taille temp == %d\n",Temp,strlen(Temp));
-            int I;
-            Temp[3] = 0;
-            for(I = 1; I <= 2; I++) {
-                fread(Temp,strlen(Temp),1,Handle);
-                printf("%i:%s\n",I,Temp);
-            }
-            fclose(Handle);
-        }
-        return 0;
-    }
-*/
-
-
-int check_in_file(char* buffer){
-
-    //Ouverture fichier
-    FILE * credentials;
-    char buf[SIZE_BUFFER] = {0};
-    credentials = fopen("credentials.txt","r+");
-    
-    if(credentials != NULL){
-        
-        while(fgets(buf,SIZE_BUFFER, credentials) != NULL){
-            if(strcmp(buffer,buf) == 0){
-            printf("Connecté, bienvenue %s !\n",buf);
-            }
-        else{
-            printf("Aucun compte avec ce username\n");
-            }
-      }
-    }
-    
-    else {
-        perror("fopen");
-        return EXIT_FAILURE;
-    }
-    fclose(credentials);
-}
+typedef struct sockaddr_in SOCKADDR_IN;
+typedef struct sockaddr SOCKADDR;
 
 static void purger(void)
 {
@@ -74,54 +42,48 @@ static void clean (char *chaine)
     }
 }
 
-void afficheMot(char * mot){
-    char i = 0;
-    while(mot[i]!='\0'){
-        printf("%c",mot[i]);
-        i++;
-    }
-  /*  while(mot[j] != '\0'){
-        printf("%c",mot[j]);
-        j++;
-    }*/
-    printf("\n");
+int main(int argc, char const *argv[])
+{
+    check_username("sam");
+    return 0;
 }
 
 
+int check_username(char* buffer){
 
-#define GRAPH_SIZE 10
-int main() {
+    //clean(buffer);
+    printf("%s\n",buffer);
+    char buf[SIZE_BUFFER] = {0};
 
-   char graph[15][15];  
-   int i,j;
+    FILE * credentials;
 
-    for(int i = 0; i < 11; i++)
-    {
-        for(j = 0; j < 11; j++){
-            
-            scanf("%c",graph[i][j]);
-            printf("i = %d\n j = %d\n",i,j);
-    }
+    /*Ouverture du fichier*/
+    credentials = fopen("username.txt","r+");
+    
+    if(credentials != NULL){
+
+    /*------------------------FIXME---------------------------------------------------------------------------------------------------------------------------------------------------------------*/  
+      /*Faire deux fichier distincs pour le login et le mot de passe
+      Dans la fonction check_in_file rajouter une ouverte de fichier pour le password.txt
+      Crée un 2ème buffer dans la fonction Fun(thread main) pour le password le premier etant pour le username
+       Surement deux fonctions une int check_username(int sock, char* buffer1) pour verifier le login et une autre check_password(int sock,char *buffer2) pour check le password c plus simple*/  
+   /* ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+      
+      
+        while(fgets(buf,SIZE_BUFFER, credentials) != NULL){
+            if(strcmp(buffer,buf) == 0){
+                printf("Connecté, bienvenue %s !\n",buf);
+                
+            }
+        else{
+            printf("Aucun compte avec ce username\n");
+            }
+      }
     }
     
-    /*
-    for(i=0;i<10;i++)
-    {
-        graph[i][i] = '*';
+    else {
+        perror("fopen");
+        return EXIT_FAILURE;
     }
-
-    for(int i = 0; i < 11; i++)
-    {
-        for(j = 0; j < 11; j++){
-            
-            printf("%c",graph[i][j]);
-        }
-        putchar('\n');
-    }
-    */
-    return 0;
-} 
-
-int generate_graph(int size){
-    return 0;
+    fclose(credentials);
 }

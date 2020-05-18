@@ -11,6 +11,7 @@
 #include <sys/select.h>
 #include <time.h>
 #include "server.h"
+#include "msg.h"
 
 
 #define SOCKET_ERROR -1
@@ -170,16 +171,47 @@ int create_socket()
 
 void* Func(void* data)
 {
+    
     int *sock = (int*)data;
     char  buffer[SIZE_BUFFER] = {0};
     char  buffer2[SIZE_BUFFER] = {0};          
   
-
     /*if(credentials == NULL){
         pthread_exit(NULL);
     }*/
     /*Boucle infinie qui attend de recevoir de la data*/
     int i = 0;
+    
+    while (1)
+    {
+         paquet data = {0};
+        if (recv(*sock,&data,sizeof(paquet),0) < 1)
+        {
+            /*Ferme le thread si le serv si le client se deco*/
+            pthread_exit(NULL);
+        }
+        else
+        {            
+            //clean(data.login);
+            //clean(data.password);
+            //printf("data.login = %s || data.password = %s\n",data.login,data.password);
+            check_username(*sock,data.login);
+            
+                
+            
+            
+            
+            
+        }
+            
+    }
+        
+     
+    
+    
+
+
+/*
     while(i < 6)
     {
        // memset(buffer, 0, SIZE_BUFFER);
@@ -189,7 +221,7 @@ void* Func(void* data)
         }
       
     }
-
+*/
     /*On libére l'espace mémoire du malloc pour la socket*/
     free(sock);
     
@@ -204,7 +236,7 @@ void* Func(void* data)
     }*/
    
     
-} 
+}
 
 
  
@@ -268,13 +300,14 @@ int func_log(char* log)
     return 0;
 }
 
-int check_in_file(int sock,char* buffer){
+int check_username(int sock,char* buffer){
 
-    //Ouverture fichier
     char buf[SIZE_BUFFER] = {0};
 
     FILE * credentials;
-    credentials = fopen("credentials.txt","r+");
+   
+    /*Ouverture du fichier*/
+    credentials = fopen("username.txt","r+");
     
     if(credentials != NULL){
 
@@ -283,7 +316,7 @@ int check_in_file(int sock,char* buffer){
       Dans la fonction check_in_file rajouter une ouverte de fichier pour le password.txt
       Crée un 2ème buffer dans la fonction Fun(thread main) pour le password le premier etant pour le username
        Surement deux fonctions une int check_username(int sock, char* buffer1) pour verifier le login et une autre check_password(int sock,char *buffer2) pour check le password c plus simple*/  
-    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+   /* ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
       
       
         while(fgets(buf,SIZE_BUFFER, credentials) != NULL){
@@ -293,8 +326,9 @@ int check_in_file(int sock,char* buffer){
                 }
             }
         else{
+            send(sock,buf,SIZE_BUFFER,0) != SOCKET_ERROR;
             printf("Aucun compte avec ce username\n");
-            }
+        }
       }
     }
     
@@ -303,4 +337,6 @@ int check_in_file(int sock,char* buffer){
         return EXIT_FAILURE;
     }
     fclose(credentials);
+
+    return 0;
 }
