@@ -121,7 +121,8 @@ int send_data(int sock){
 int login(int sock){
 
     paquet credentials = {0};
-    char buffer[SIZE_BUFFER] = {0};
+    paquet pitbull= {0};
+
     printf("LOGIN PAGE \n");
     printf("Username: ");
     
@@ -138,7 +139,7 @@ int login(int sock){
     printf("password = |%s|\n", credentials.password);
     
     printf("\n");
-    
+    credentials.message = cred;
     if(send(sock,&credentials,paquet_size,0) != SOCKET_ERROR)
     {
         printf("Username send\n");
@@ -148,13 +149,12 @@ int login(int sock){
         perror("Username don't send");
     }
     char saisie[10];
-    memset(buffer, 0, SIZE_BUFFER);
-    if(recv(sock, buffer, SIZE_BUFFER, 0) != SOCKET_ERROR){
-        if (strcmp(buffer,credentials.login) == 0)
+    if(recv(sock,&pitbull, paquet_size, 0) != SOCKET_ERROR){
+        if (pitbull.message == loginok)
         {
-            printf("Connecté, bienvenue %s\n",buffer);
+            printf("Connecté, bienvenue %s\n",credentials.login);
         }
-        else
+        else if (pitbull.message == loginKO)
         {
             printf("Aucun compte avec ce username\n");
             printf("\n");
@@ -170,6 +170,9 @@ int login(int sock){
                 create_account(sock);
             }
         }
+    }
+
+  
 }
 
 int create_account(int sock){
@@ -187,7 +190,7 @@ int create_account(int sock){
     fgets(username.password,sizeof(username.password),stdin);
 
     printf("\n");
-    
+    username.message = account;
     if(send(sock,&username,sizeof(username),0) != SOCKET_ERROR)
     {
         printf("credentials send\n");
